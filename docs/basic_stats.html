@@ -344,7 +344,7 @@ div.tocify {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">corona_virusl</a>
+      <a class="navbar-brand" href="index.html">Covid-19</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -353,6 +353,9 @@ div.tocify {
 </li>
 <li>
   <a href="about.html">About</a>
+</li>
+<li>
+  <a href="basic_stats.html">Basic Stats</a>
 </li>
 <li>
   <a href="license.html">License</a>
@@ -385,7 +388,7 @@ div.section {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -394,7 +397,7 @@ div.section {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -406,7 +409,7 @@ div.section {
 <strong>Last updated:</strong> 2020-03-09
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
 </p>
 <p>
 <strong>Knit directory:</strong> <code>corona_virus/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -422,12 +425,12 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
 </div>
 </div>
 </div>
@@ -494,18 +497,18 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrong1a8fc50"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> 1a8fc50 </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomdewollercovid19tree59b0a0be0e99bb788ec125098cb60a97d33d260dtargetblank59b0a0ba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/dewoller/covid-19/tree/59b0a0be0e99bb788ec125098cb60a97d33d260d" target="_blank">59b0a0b</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrong1a8fc50" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomdewollercovid19tree59b0a0be0e99bb788ec125098cb60a97d33d260dtargetblank59b0a0ba" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 </p>
 <pre><code>
 Unstaged changes:
-    Deleted:    .Rprofile
-    Deleted:    analysis/explore.Rmd
+    Modified:   analysis/basic_stats.Rmd
+    Modified:   analysis/license.Rmd
 
 </code></pre>
 <p>
@@ -549,7 +552,41 @@ Message
 Rmd
 </td>
 <td>
-1a8fc50
+<a href="https://github.com/dewoller/covid-19/blob/59b0a0be0e99bb788ec125098cb60a97d33d260d/analysis/basic_stats.Rmd" target="_blank">59b0a0b</a>
+</td>
+<td>
+Dennis Wollersheim
+</td>
+<td>
+2020-03-08
+</td>
+<td>
+setup
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/dewoller/covid-19/f7ba6bc7e3912c5445e2b92430cc62b020d57568/docs/basic_stats.html" target="_blank">f7ba6bc</a>
+</td>
+<td>
+Dennis Wollersheim
+</td>
+<td>
+2020-03-08
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/dewoller/covid-19/blob/1a8fc50587b3ff831e60d7b72f86ca9a88a58b75/analysis/basic_stats.Rmd" target="_blank">1a8fc50</a>
 </td>
 <td>
 Dennis Wollersheim
@@ -571,7 +608,35 @@ wflow_publish(“analysis/basic_stats.Rmd”)
 
 <div id="data-source" class="section level1">
 <h1>Data Source</h1>
-<p>Sourced from <a href="https://ramikrispin.github.io/coronavirus/" class="uri">https://ramikrispin.github.io/coronavirus/</a></p>
+<p>Sourced from <a href="https://ramikrispin.github.io/coronavirus/" class="uri">https://ramikrispin.github.io/coronavirus/</a> and the R package wpp2017, world population profile</p>
+<p>If you want to know why Italy just quarantined 18 million people, read on.</p>
+<pre class="r"><code>suppressMessages(suppressWarnings( library(tidyverse)))
+library(coronavirus)
+library(wpp2017)
+data(pop)
+
+pop %&gt;% 
+  as_tibble() %&gt;% 
+  { . } -&gt; pop
+
+mapping = tribble(
+                  ~Country.Region, ~name, 
+                  &#39;US&#39;, &#39;United States of America&#39;,
+                  &#39;UK&#39;, &#39;United Kingdom&#39;,
+                  &#39;Mainland China&#39;, &#39;China&#39;,
+                  &#39;South Korea&#39;, &#39;Republic of Korea&#39;,
+                  &#39;Taiwan&#39;,&#39;China, Taiwan Province of China&#39;,
+                  &#39;Vietnam&#39;, &#39;Viet Nam&#39;,
+                  &#39;Hong Kong&#39;, &#39;China, Hong Kong SAR&#39;,
+                  &#39;Russia&#39;, &#39;Russian Federation&#39;,
+                  &#39;Iran&#39;,&#39;Iran (Islamic Republic of)&#39;
+)
+
+
+coronavirus %&gt;%
+  left_join( mapping ) %&gt;% 
+  { . } -&gt; coronavirus</code></pre>
+<pre><code>Joining, by = &quot;Country.Region&quot;</code></pre>
 </div>
 <div id="cumulative-cases-by-country-and-number-of-days-since-first-case" class="section level1">
 <h1>Cumulative cases by country and number of days since first case</h1>
@@ -591,6 +656,43 @@ wflow_publish(“analysis/basic_stats.Rmd”)
   scale_y_log10() +
   scale_x_continuous()</code></pre>
 <p><img src="figure/basic_stats.Rmd/unnamed-chunk-1-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-1-1">
+Past versions of unnamed-chunk-1-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-1-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/dewoller/covid-19/blob/f7ba6bc7e3912c5445e2b92430cc62b020d57568/docs/figure/basic_stats.Rmd/unnamed-chunk-1-1.png" target="_blank">f7ba6bc</a>
+</td>
+<td>
+Dennis Wollersheim
+</td>
+<td>
+2020-03-08
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="cumulative-deaths-by-country-and-number-of-days-since-first-case" class="section level1">
 <h1>Cumulative deaths by country and number of days since first case</h1>
@@ -610,6 +712,43 @@ wflow_publish(“analysis/basic_stats.Rmd”)
   scale_y_log10() +
   scale_x_continuous()</code></pre>
 <p><img src="figure/basic_stats.Rmd/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-2-1">
+Past versions of unnamed-chunk-2-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-2-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/dewoller/covid-19/blob/f7ba6bc7e3912c5445e2b92430cc62b020d57568/docs/figure/basic_stats.Rmd/unnamed-chunk-2-1.png" target="_blank">f7ba6bc</a>
+</td>
+<td>
+Dennis Wollersheim
+</td>
+<td>
+2020-03-08
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="rate-of-new-cases-per-day-since-the-start-of-infection-by-country" class="section level1">
 <h1>Rate of new cases per day, since the start of infection by country</h1>
@@ -636,6 +775,43 @@ wflow_publish(“analysis/basic_stats.Rmd”)
   scale_x_continuous()</code></pre>
 <pre><code>`geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;</code></pre>
 <p><img src="figure/basic_stats.Rmd/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-1">
+Past versions of unnamed-chunk-3-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/dewoller/covid-19/blob/f7ba6bc7e3912c5445e2b92430cc62b020d57568/docs/figure/basic_stats.Rmd/unnamed-chunk-3-1.png" target="_blank">f7ba6bc</a>
+</td>
+<td>
+Dennis Wollersheim
+</td>
+<td>
+2020-03-08
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="total-cumulative-confirmed-cases-as-a-population-rate" class="section level1">
 <h1>Total cumulative confirmed cases as a population rate</h1>
@@ -651,13 +827,50 @@ wflow_publish(“analysis/basic_stats.Rmd”)
   group_by( Country.Region) %&gt;%
   filter( sum(cases) &gt; 100 ) %&gt;%
   arrange( ndays, .by_group=TRUE) %&gt;%
-  mutate( prop = cumsum(cases ) / population  ) %&gt;%
-  ggplot(aes( ndays, prop, color=Country.Region)) +
+  mutate( rate = cumsum(cases ) / population  ) %&gt;%
+  ggplot(aes( ndays, rate, color=Country.Region)) +
   geom_smooth() +
   scale_y_log10() +
   scale_x_continuous()</code></pre>
 <pre><code>`geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;</code></pre>
 <p><img src="figure/basic_stats.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-1">
+Past versions of unnamed-chunk-4-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-4-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/dewoller/covid-19/blob/f7ba6bc7e3912c5445e2b92430cc62b020d57568/docs/figure/basic_stats.Rmd/unnamed-chunk-4-1.png" target="_blank">f7ba6bc</a>
+</td>
+<td>
+Dennis Wollersheim
+</td>
+<td>
+2020-03-08
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="new-cases-in-latest-data" class="section level1">
 <h1># new cases in latest data</h1>
@@ -702,19 +915,43 @@ BLAS:   /usr/lib/x86_64-linux-gnu/openblas/libblas.so.3
 LAPACK: /usr/lib/x86_64-linux-gnu/libopenblasp-r0.2.20.so
 
 locale:
- [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C               LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8     LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8    LC_PAPER=en_US.UTF-8       LC_NAME=C                  LC_ADDRESS=C               LC_TELEPHONE=C             LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
 
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] wpp2017_1.2-3          coronavirus_0.1.0.9000 forcats_0.4.0          stringr_1.4.0          dplyr_0.8.4            purrr_0.3.3            readr_1.3.1            tidyr_1.0.2            tibble_2.1.3           ggplot2_3.2.1          tidyverse_1.3.0        nvimcom_0.9-82        
+ [1] wpp2017_1.2-3          coronavirus_0.1.0.9000 forcats_0.4.0         
+ [4] stringr_1.4.0          dplyr_0.8.4            purrr_0.3.3           
+ [7] readr_1.3.1            tidyr_1.0.2            tibble_2.1.3          
+[10] ggplot2_3.2.1          tidyverse_1.3.0        nvimcom_0.9-82        
 
 loaded via a namespace (and not attached):
- [1] tidyselect_1.0.0     xfun_0.11            haven_2.2.0          lattice_0.20-40      colorspace_1.4-1     vctrs_0.2.3          generics_0.0.2       htmltools_0.4.0      yaml_2.2.1           utf8_1.1.4           rlang_0.4.4          pillar_1.4.3         withr_2.1.2          glue_1.3.1           DBI_1.1.0            dbplyr_1.4.2         modelr_0.1.5         readxl_1.3.1        
-[19] lifecycle_0.1.0      munsell_0.5.0        gtable_0.3.0         workflowr_1.4.0.9001 cellranger_1.1.0     rvest_0.3.5          evaluate_0.14        labeling_0.3         knitr_1.28           fansi_0.4.1          broom_0.5.4          Rcpp_1.0.3           backports_1.1.5      scales_1.1.0         jsonlite_1.6.1       farver_2.0.1         fs_1.3.1             hms_0.5.3           
-[37] digest_0.6.24        stringi_1.4.6        grid_3.6.1           rprojroot_1.3-2      cli_2.0.1            tools_3.6.1          magrittr_1.5         lazyeval_0.2.2       crayon_1.3.4         whisker_0.4          pkgconfig_2.0.3      data.table_1.12.8    xml2_1.2.2           reprex_0.3.0         lubridate_1.7.4      assertthat_0.2.1     rmarkdown_2.1        httr_1.4.1          
-[55] rstudioapi_0.11      R6_2.4.1             nlme_3.1-142         git2r_0.26.1         compiler_3.6.1      </code></pre>
+ [1] tidyselect_1.0.0     xfun_0.11            haven_2.2.0         
+ [4] lattice_0.20-40      colorspace_1.4-1     vctrs_0.2.3         
+ [7] generics_0.0.2       htmltools_0.4.0      yaml_2.2.1          
+[10] utf8_1.1.4           rlang_0.4.4          pillar_1.4.3        
+[13] withr_2.1.2          glue_1.3.1           DBI_1.1.0           
+[16] dbplyr_1.4.2         modelr_0.1.5         readxl_1.3.1        
+[19] lifecycle_0.1.0      munsell_0.5.0        gtable_0.3.0        
+[22] workflowr_1.4.0.9001 cellranger_1.1.0     rvest_0.3.5         
+[25] evaluate_0.14        labeling_0.3         knitr_1.28          
+[28] fansi_0.4.1          broom_0.5.4          Rcpp_1.0.3          
+[31] backports_1.1.5      scales_1.1.0         jsonlite_1.6.1      
+[34] farver_2.0.1         fs_1.3.1             hms_0.5.3           
+[37] digest_0.6.24        stringi_1.4.6        grid_3.6.1          
+[40] rprojroot_1.3-2      cli_2.0.1            tools_3.6.1         
+[43] magrittr_1.5         lazyeval_0.2.2       crayon_1.3.4        
+[46] whisker_0.4          pkgconfig_2.0.3      data.table_1.12.8   
+[49] xml2_1.2.2           reprex_0.3.0         lubridate_1.7.4     
+[52] assertthat_0.2.1     rmarkdown_2.1        httr_1.4.1          
+[55] rstudioapi_0.11      R6_2.4.1             nlme_3.1-142        
+[58] git2r_0.26.1         compiler_3.6.1      </code></pre>
 </div>
 </div>
 

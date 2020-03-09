@@ -2,6 +2,8 @@
 title:           Covid-19 
 author:          Dennis Wollersheim 
 date:            06.03.2020
+fig_width:       8 
+fig_height:      4 
 linkcolor:       cyan
 citecolor:       grey
 output:
@@ -17,17 +19,27 @@ knitr::opts_chunk$set(echo = TRUE, warning=FALSE)
 #devtools::install_github("RamiKrispin/coronavirus")
 #install.packages('wpp2017')
 
-library(tidyverse)
 
+
+```
+
+# Data Source
+
+Sourced from https://ramikrispin.github.io/coronavirus/ and the R package wpp2017, world population profile
+
+If you want to know why Italy just quarantined 18 million people, read on.
+
+
+```{r Setup}
+
+suppressMessages(suppressWarnings( library(tidyverse)))
 library(coronavirus)
 library(wpp2017)
-
 data(pop)
 
-pop %>% as_tibble() %>% 
-{ . } -> pop
-
-
+pop %>% 
+  as_tibble() %>% 
+  { . } -> pop
 
 mapping = tribble(
                   ~Country.Region, ~name, 
@@ -47,17 +59,7 @@ coronavirus %>%
   left_join( mapping ) %>% 
   { . } -> coronavirus
 
-options(width = 400)
-
-
 ```
-
-# Data Source
-
-Sourced from https://ramikrispin.github.io/coronavirus/ and the R package wpp2017, world population profile
-
-If you want to know why Italy just quarantined 18million people, read on.
-
 # Cumulative cases by country and number of days since first case
 
 ```{r}
