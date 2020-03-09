@@ -144,6 +144,7 @@ coronavirus %>%
 
 # Total cumulative confirmed cases as a population rate
 
+Note, Japan had -1 cases on day 2
 
 ```{r}
 
@@ -157,11 +158,12 @@ coronavirus %>%
   summarise( cases=sum(cases), population = min(`2015`)) %>%
   ungroup() %>%
   group_by( Country.Region) %>%
-  filter( sum(cases) > 100 ) %>%
+ # filter( Country.Region=='Japan' ) %>%
+  filter( sum(cases) > 200 ) %>%
   arrange( ndays, .by_group=TRUE) %>%
-  mutate( rate = cumsum(cases ) / population  ) %>%
+  mutate( cumcases = cumsum(cases), rate = cumsum(cases ) / population  ) %>%
   ggplot(aes( ndays, rate, color=Country.Region)) +
-  geom_smooth() +
+  geom_line() +
   scale_y_log10() +
   scale_x_continuous()
 
