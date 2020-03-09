@@ -54,7 +54,9 @@ options(width = 400)
 
 # Data Source
 
-Sourced from https://ramikrispin.github.io/coronavirus/
+Sourced from https://ramikrispin.github.io/coronavirus/ and the R package wpp2017, world population profile
+
+If you want to know why Italy just quarantined 18million people, read on.
 
 # Cumulative cases by country and number of days since first case
 
@@ -155,8 +157,8 @@ coronavirus %>%
   group_by( Country.Region) %>%
   filter( sum(cases) > 100 ) %>%
   arrange( ndays, .by_group=TRUE) %>%
-  mutate( prop = cumsum(cases ) / population  ) %>%
-  ggplot(aes( ndays, prop, color=Country.Region)) +
+  mutate( rate = cumsum(cases ) / population  ) %>%
+  ggplot(aes( ndays, rate, color=Country.Region)) +
   geom_smooth() +
   scale_y_log10() +
   scale_x_continuous()

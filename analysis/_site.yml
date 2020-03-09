@@ -1,12 +1,14 @@
-name: "corona_virusl"
+name: "Covid-19"
 output_dir: ../docs
 navbar:
-  title: "corona_virusl"
+  title: "Covid-19"
   left:
   - text: Home
     href: index.html
   - text: About
     href: about.html
+  - text: Basic Stats
+    href: basic_stats.html
   - text: License
     href: license.html
 output:
