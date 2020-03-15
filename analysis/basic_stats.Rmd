@@ -36,6 +36,7 @@ suppressMessages(suppressWarnings( library(tidyverse)))
 library(coronavirus)
 library(wpp2017)
 library(lubridate)
+library(dplyr)
 data(pop)
 
 pop %>% 
@@ -60,6 +61,15 @@ coronavirus %>%
   left_join( mapping ) %>% 
   { . } -> coronavirus
 
+coronavirus %>%
+  filter( type=='confirmed' ) %>%
+  group_by( Country.Region ) %>%
+  summarise( cases = sum(cases)) %>%
+  top_n(10, cases) %>% 
+  pluck('Country.Region') %>% 
+  c('Australia', 'Singapore') %>%
+  { . } -> top_10_countries
+
 ```
 # Cumulative cases by country and number of days since first case
 
@@ -74,15 +84,13 @@ coronavirus %>%
   summarise( cases=sum(cases)) %>%
   ungroup() %>%
   group_by( Country.Region) %>%
-  filter( sum(cases) > 200 ) %>%
+  filter( Country.Region %in% top_10_countries) %>%
   arrange( ndays, .by_group=TRUE) %>%
   mutate( cum_cases = cumsum( cases) ) %>%
   ggplot(aes( ndays, cum_cases, color=Country.Region)) +
   geom_line() +
   scale_y_log10() +
   scale_x_continuous()
-
-
 
 
 ```
@@ -100,7 +108,7 @@ coronavirus %>%
   summarise( cases=sum(cases)) %>%
   ungroup() %>%
   group_by( Country.Region) %>%
-  filter( sum(cases) > 10 ) %>%
+  filter( Country.Region %in% top_10_countries) %>%
   arrange( ndays, .by_group=TRUE) %>%
   mutate( cum_cases = cumsum( cases) ) %>%
   ggplot(aes( ndays, cum_cases, color=Country.Region)) +
@@ -131,7 +139,7 @@ coronavirus %>%
   summarise( cases=sum(cases)) %>%
   ungroup() %>%
   group_by( Country.Region) %>%
-  filter( sum(cases) > 100 ) %>%
+  filter( Country.Region %in% top_10_countries) %>%
   arrange( ndays, .by_group=TRUE) %>%
   mutate( rate = cumsum(cases ) / as.integer(ndays)  ) %>%
   ggplot(aes( ndays, rate, color=Country.Region)) +
@@ -160,7 +168,7 @@ coronavirus %>%
   summarise( cases=sum(cases), population = min(`2015`)) %>%
   ungroup() %>%
   group_by( Country.Region) %>%
-  filter( sum(cases) > 200  | Country.Region=='Singapore' | Country.Region=='Australia') %>%
+  filter( Country.Region %in% top_10_countries) %>%
   arrange( ndays, .by_group=TRUE) %>%
   mutate( cumcases = cumsum(cases), rate = cumsum(cases ) / population  ) %>%
   ggplot(aes( ndays, rate, color=Country.Region)) +
@@ -189,7 +197,7 @@ coronavirus %>%
   ungroup() %>%
   group_by( Country.Region) %>%
   # filter( Country.Region=='Japan' ) %>%
-  filter( sum(cases) > 200  | Country.Region=='Singapore' | Country.Region=='Australia') %>%
+  filter( Country.Region %in% top_10_countries) %>%
   mutate( rate = cases  / population  ) %>%
   ggplot(aes( week, rate, color=Country.Region)) +
   geom_line() +
@@ -215,7 +223,7 @@ coronavirus %>%
   ungroup() %>%
   group_by( Country.Region) %>%
   # filter( Country.Region=='Japan' ) %>%
-  filter( sum(cases) > 200  | Country.Region=='Singapore' | Country.Region=='Australia') %>%
+  filter( Country.Region %in% top_10_countries) %>%
   mutate( rate = cases  / population  ) %>%
   ggplot(aes( date, rate, color=Country.Region)) +
   geom_smooth() +
