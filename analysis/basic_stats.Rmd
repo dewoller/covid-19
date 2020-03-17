@@ -266,6 +266,9 @@ coronavirus %>%
 
 # Australia's choice
 
+We can either follow the slope of Iran/Italy, or China/Korea
+Currently, looking like Iran/Italy
+
 ```{r selected_countries}
 
 coronavirus %>% 

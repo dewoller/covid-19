@@ -1,0 +1,77 @@
+---
+title:           Covid-19
+author:          Dennis Wollersheim
+date:            06.03.2020
+fig_width:       8
+fig_height:      4
+linkcolor:       cyan
+citecolor:       grey
+output:
+  pdf_document:
+    highlight:   zenburn
+---
+
+\tableofcontents
+
+```{r loadd, results='asis', echo=FALSE, include=FALSE,}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE)
+
+devtools::install_github("RamiKrispin/coronavirus")
+#install.packages('wpp2017')
+
+
+
+```
+
+# Data Source
+
+Sourced from https://ramikrispin.github.io/coronavirus/ and the R package wpp2017, world population profile
+
+If you want to know why Italy just quarantined 18 million people, read on.
+
+
+```{r Setup}
+
+suppressMessages(suppressWarnings( library(tidyverse)))
+library(coronavirus)
+library(wpp2017)
+library(lubridate)
+library(dplyr)
+library(readxl)
+data(pop)
+
+pop %>%
+  as_tibble() %>%
+  { . } -> pop
+
+mapping = tribble(
+                  ~Country.Region, ~name,
+                  'US', 'United States of America',
+                  'UK', 'United Kingdom',
+                  'Mainland China', 'China',
+                  'South Korea', 'Republic of Korea',
+                  'Taiwan','China, Taiwan Province of China',
+                  'Vietnam', 'Viet Nam',
+                  'Hong Kong', 'China, Hong Kong SAR',
+                  'Russia', 'Russian Federation',
+                  'Iran','Iran (Islamic Republic of)'
+)
+
+
+coronavirus %>%
+  left_join( mapping ) %>%
+  filter( type=='confirmed' ) %>%
+  filter(Country.Region=='Australia') %>%
+  as_tibble() %>%
+  { . } -> coronavirus
+
+coronavirus %>%
+  filter( type=='confirmed' | type == 'recovered' ) %>%
+  group_by( Country.Region, date ) %>%
+  summarise(cases = sum(cases)) %>%
+  ungroup() %>%
+  mutate( cumcases = cumsum(cases),
+         nventilator= .05 * cumcases,
+         vdays = 28 * nventilator ) %>%
+
+```
