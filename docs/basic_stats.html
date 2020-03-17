@@ -497,15 +497,18 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomdewollercovid19tree7469906fb467abd7d18bf921093e4bd661c5374ctargetblank7469906a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/dewoller/covid-19/tree/7469906fb467abd7d18bf921093e4bd661c5374c" target="_blank">7469906</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomdewollercovid19tree43b8f4bdf6f402cc824a9db5c4cd2e4e851cbe11targetblank43b8f4ba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/dewoller/covid-19/tree/43b8f4bdf6f402cc824a9db5c4cd2e4e851cbe11" target="_blank">43b8f4b</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomdewollercovid19tree7469906fb467abd7d18bf921093e4bd661c5374ctargetblank7469906a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomdewollercovid19tree43b8f4bdf6f402cc824a9db5c4cd2e4e851cbe11targetblank43b8f4ba" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 </p>
 <pre><code>
+Ignored files:
+    Ignored:    analysis/figure/
+
 Untracked files:
     Untracked:  analysis/hospital_beds.Rmd
     Untracked:  data/aihw-hse-233-data-tables.xlsx
@@ -549,6 +552,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/dewoller/covid-19/blob/43b8f4bdf6f402cc824a9db5c4cd2e4e851cbe11/analysis/basic_stats.Rmd" target="_blank">43b8f4b</a>
+</td>
+<td>
+Dennis Wollersheim
+</td>
+<td>
+2020-03-17
+</td>
+<td>
+wflow_publish(“analysis/basic_stats.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/dewoller/covid-19/4ed0138dc9c601214721e28e2755bd20920ec716/docs/basic_stats.html" target="_blank">4ed0138</a>
+</td>
+<td>
+Dennis Wollersheim
+</td>
+<td>
+2020-03-16
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -801,22 +838,39 @@ pop %&gt;%
 mapping = tribble(
                   ~Country.Region, ~name, 
                   &#39;US&#39;, &#39;United States of America&#39;,
-                  &#39;UK&#39;, &#39;United Kingdom&#39;,
-                  &#39;Mainland China&#39;, &#39;China&#39;,
-                  &#39;South Korea&#39;, &#39;Republic of Korea&#39;,
-                  &#39;Taiwan&#39;,&#39;China, Taiwan Province of China&#39;,
+                  &#39;United Kingdom&#39;, &#39;United Kingdom&#39;,
+                  &#39;China&#39;, &#39;China&#39;,
+                  &#39;Korea, South&#39;, &#39;Republic of Korea&#39;,
+                  &#39;Taiwan*&#39;,&#39;China, Taiwan Province of China&#39;,
                   &#39;Vietnam&#39;, &#39;Viet Nam&#39;,
-                  &#39;Hong Kong&#39;, &#39;China, Hong Kong SAR&#39;,
                   &#39;Russia&#39;, &#39;Russian Federation&#39;,
                   &#39;Iran&#39;,&#39;Iran (Islamic Republic of)&#39;
 )
 
-
 coronavirus %&gt;%
+  as_tibble() %&gt;%
   left_join( mapping ) %&gt;% 
+  mutate( name = ifelse(is.na(name), Country.Region, name)) %&gt;%
   { . } -&gt; coronavirus</code></pre>
 <pre><code>Joining, by = &quot;Country.Region&quot;</code></pre>
-<pre class="r"><code>coronavirus %&gt;%
+<pre class="r"><code>if (FALSE) {
+  mapping %&gt;% 
+    anti_join( coronavirus)
+
+  mapping %&gt;% 
+    anti_join( pop )
+
+  coronavirus %&gt;%
+    left_join( mapping ) %&gt;% 
+    as_tibble() %&gt;%
+    distinct(name) %&gt;% 
+    { . } -&gt; ac
+      pop %&gt;% 
+        filter( !str_detect(as.character(name), &#39;WORLD|countries|regions&#39;) ) %&gt;%
+        distinct(name) %&gt;% anti_join(ac)
+}
+
+coronavirus %&gt;%
   filter( type==&#39;confirmed&#39; ) %&gt;%
   group_by( Country.Region ) %&gt;%
   summarise( cases = sum(cases)) %&gt;%
@@ -865,6 +919,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/dewoller/covid-19/blob/4ed0138dc9c601214721e28e2755bd20920ec716/docs/figure/basic_stats.Rmd/unnamed-chunk-1-1.png" target="_blank">4ed0138</a>
+</td>
+<td>
+Dennis Wollersheim
+</td>
+<td>
+2020-03-16
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/dewoller/covid-19/blob/7469906fb467abd7d18bf921093e4bd661c5374c/docs/figure/basic_stats.Rmd/unnamed-chunk-1-1.png" target="_blank">7469906</a>
@@ -954,6 +1019,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/dewoller/covid-19/blob/4ed0138dc9c601214721e28e2755bd20920ec716/docs/figure/basic_stats.Rmd/unnamed-chunk-2-1.png" target="_blank">4ed0138</a>
+</td>
+<td>
+Dennis Wollersheim
+</td>
+<td>
+2020-03-16
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/dewoller/covid-19/blob/7469906fb467abd7d18bf921093e4bd661c5374c/docs/figure/basic_stats.Rmd/unnamed-chunk-2-1.png" target="_blank">7469906</a>
@@ -1052,6 +1128,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/dewoller/covid-19/blob/4ed0138dc9c601214721e28e2755bd20920ec716/docs/figure/basic_stats.Rmd/unnamed-chunk-3-1.png" target="_blank">4ed0138</a>
+</td>
+<td>
+Dennis Wollersheim
+</td>
+<td>
+2020-03-16
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/dewoller/covid-19/blob/7469906fb467abd7d18bf921093e4bd661c5374c/docs/figure/basic_stats.Rmd/unnamed-chunk-3-1.png" target="_blank">7469906</a>
 </td>
 <td>
@@ -1106,7 +1193,6 @@ Dennis Wollersheim
 </ul>
 <p>Note, Japan had -1 cases on day 2</p>
 <pre class="r"><code>coronavirus %&gt;% 
-  mutate( name = ifelse(is.na(name), Country.Region, name)) %&gt;%
   inner_join(pop, by=&#39;name&#39; ) %&gt;% 
   filter( type==&#39;confirmed&#39; ) %&gt;%
   group_by( Country.Region ) %&gt;%
@@ -1145,6 +1231,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/dewoller/covid-19/blob/4ed0138dc9c601214721e28e2755bd20920ec716/docs/figure/basic_stats.Rmd/unnamed-chunk-4-1.png" target="_blank">4ed0138</a>
+</td>
+<td>
+Dennis Wollersheim
+</td>
+<td>
+2020-03-16
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/dewoller/covid-19/blob/7469906fb467abd7d18bf921093e4bd661c5374c/docs/figure/basic_stats.Rmd/unnamed-chunk-4-1.png" target="_blank">7469906</a>
@@ -1219,7 +1316,6 @@ Dennis Wollersheim
 <div id="new-cases-population-rate-by-week" class="section level1">
 <h1>New cases population rate by week</h1>
 <pre class="r"><code>coronavirus %&gt;% 
-  mutate( name = ifelse(is.na(name), Country.Region, name)) %&gt;%
   inner_join(pop, by=&#39;name&#39; ) %&gt;% 
   filter( type==&#39;confirmed&#39; ) %&gt;%
   group_by( Country.Region ) %&gt;%
@@ -1258,6 +1354,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/dewoller/covid-19/blob/4ed0138dc9c601214721e28e2755bd20920ec716/docs/figure/basic_stats.Rmd/unnamed-chunk-5-1.png" target="_blank">4ed0138</a>
+</td>
+<td>
+Dennis Wollersheim
+</td>
+<td>
+2020-03-16
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/dewoller/covid-19/blob/7469906fb467abd7d18bf921093e4bd661c5374c/docs/figure/basic_stats.Rmd/unnamed-chunk-5-1.png" target="_blank">7469906</a>
@@ -1299,7 +1406,6 @@ Dennis Wollersheim
 <div id="new-cases-population-rate-by-day-smoothed" class="section level1">
 <h1>New cases population rate by day, smoothed</h1>
 <pre class="r"><code>coronavirus %&gt;% 
-  mutate( name = ifelse(is.na(name), Country.Region, name)) %&gt;%
   inner_join(pop, by=&#39;name&#39; ) %&gt;% 
   filter( type==&#39;confirmed&#39; ) %&gt;%
   group_by( Country.Region ) %&gt;%
@@ -1337,6 +1443,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/dewoller/covid-19/blob/4ed0138dc9c601214721e28e2755bd20920ec716/docs/figure/basic_stats.Rmd/unnamed-chunk-6-1.png" target="_blank">4ed0138</a>
+</td>
+<td>
+Dennis Wollersheim
+</td>
+<td>
+2020-03-16
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/dewoller/covid-19/blob/7469906fb467abd7d18bf921093e4bd661c5374c/docs/figure/basic_stats.Rmd/unnamed-chunk-6-1.png" target="_blank">7469906</a>
@@ -1401,6 +1518,28 @@ Dennis Wollersheim
  9 Belgium        2020-03-16       172     1         0
 10 Canada         2020-03-16       163     3         1
 # … with 146 more rows</code></pre>
+</div>
+<div id="australias-choice" class="section level1">
+<h1>Australia’s choice</h1>
+<pre class="r"><code>coronavirus %&gt;% 
+  #  filter( str_detect(Country.Region, &#39;ai&#39;)) %&gt;%
+  filter( Country.Region %in% c(&#39;Australia&#39;,&#39;Italy&#39;,&#39;Iran&#39;,&#39;US&#39;, &#39;China&#39;, &#39;Korea, South&#39;, &#39;Taiwan*&#39;, &#39;Japan&#39;)) %&gt;%
+  inner_join(pop, by=&#39;name&#39; ) %&gt;% 
+  filter( type==&#39;confirmed&#39; ) %&gt;%
+  group_by( Country.Region ) %&gt;%
+  mutate(ndays = date-min(date) ) %&gt;%
+  group_by( Country.Region, ndays ) %&gt;%
+  summarise( cases=sum(cases), population = min(`2015`)) %&gt;%
+  ungroup() %&gt;%
+  group_by( Country.Region) %&gt;%
+  filter( Country.Region %in% c(&#39;Australia&#39;,&#39;Italy&#39;,&#39;Iran&#39;,&#39;US&#39;, &#39;China&#39;, &#39;Korea, South&#39;, &#39;Taiwan*&#39;, &#39;Japan&#39;)) %&gt;%
+  arrange( ndays, .by_group=TRUE) %&gt;%
+  mutate( cumcases = cumsum(cases), rate = cumsum(cases ) / population  ) %&gt;%
+  ggplot(aes( ndays, rate, color=Country.Region)) +
+  geom_line() +
+  scale_y_log10() +
+  scale_x_continuous()</code></pre>
+<p><img src="figure/basic_stats.Rmd/selected_countries-1.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1449,7 +1588,7 @@ loaded via a namespace (and not attached):
 [31] lazyeval_0.2.2       cli_2.0.2            magrittr_1.5        
 [34] crayon_1.3.4         readxl_1.3.1         memoise_1.1.0       
 [37] evaluate_0.14        ps_1.3.2             fs_1.3.2            
-[40] fansi_0.4.1          nlme_3.1-142         xml2_1.2.2          
+[40] fansi_0.4.1          nlme_3.1-142         xml2_1.2.5          
 [43] pkgbuild_1.0.6       data.table_1.12.8    tools_3.6.1         
 [46] prettyunits_1.1.1    hms_0.5.3            lifecycle_0.2.0     
 [49] munsell_0.5.0        reprex_0.3.0         callr_3.4.2         
