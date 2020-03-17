@@ -46,20 +46,37 @@ pop %>%
 mapping = tribble(
                   ~Country.Region, ~name, 
                   'US', 'United States of America',
-                  'UK', 'United Kingdom',
-                  'Mainland China', 'China',
-                  'South Korea', 'Republic of Korea',
-                  'Taiwan','China, Taiwan Province of China',
+                  'United Kingdom', 'United Kingdom',
+                  'China', 'China',
+                  'Korea, South', 'Republic of Korea',
+                  'Taiwan*','China, Taiwan Province of China',
                   'Vietnam', 'Viet Nam',
-                  'Hong Kong', 'China, Hong Kong SAR',
                   'Russia', 'Russian Federation',
                   'Iran','Iran (Islamic Republic of)'
 )
 
-
 coronavirus %>%
+  as_tibble() %>%
   left_join( mapping ) %>% 
+  mutate( name = ifelse(is.na(name), Country.Region, name)) %>%
   { . } -> coronavirus
+
+if (FALSE) {
+  mapping %>% 
+    anti_join( coronavirus)
+
+  mapping %>% 
+    anti_join( pop )
+
+  coronavirus %>%
+    left_join( mapping ) %>% 
+    as_tibble() %>%
+    distinct(name) %>% 
+    { . } -> ac
+      pop %>% 
+        filter( !str_detect(as.character(name), 'WORLD|countries|regions') ) %>%
+        distinct(name) %>% anti_join(ac)
+}
 
 coronavirus %>%
   filter( type=='confirmed' ) %>%
@@ -159,7 +176,6 @@ Note, Japan had -1 cases on day 2
 ```{r}
 
 coronavirus %>% 
-  mutate( name = ifelse(is.na(name), Country.Region, name)) %>%
   inner_join(pop, by='name' ) %>% 
   filter( type=='confirmed' ) %>%
   group_by( Country.Region ) %>%
@@ -187,7 +203,6 @@ coronavirus %>%
 ```{r}
 
 coronavirus %>% 
-  mutate( name = ifelse(is.na(name), Country.Region, name)) %>%
   inner_join(pop, by='name' ) %>% 
   filter( type=='confirmed' ) %>%
   group_by( Country.Region ) %>%
@@ -214,7 +229,6 @@ coronavirus %>%
 ```{r}
 
 coronavirus %>% 
-  mutate( name = ifelse(is.na(name), Country.Region, name)) %>%
   inner_join(pop, by='name' ) %>% 
   filter( type=='confirmed' ) %>%
   group_by( Country.Region ) %>%
@@ -246,6 +260,32 @@ coronavirus %>%
   pivot_wider(names_from = type, values_from = total_cases) %>%
   arrange(-confirmed)
 
+
+
+```
+
+# Australia's choice
+
+```{r selected_countries}
+
+coronavirus %>% 
+  #  filter( str_detect(Country.Region, 'ai')) %>%
+  filter( Country.Region %in% c('Australia','Italy','Iran','US', 'China', 'Korea, South', 'Taiwan*', 'Japan')) %>%
+  inner_join(pop, by='name' ) %>% 
+  filter( type=='confirmed' ) %>%
+  group_by( Country.Region ) %>%
+  mutate(ndays = date-min(date) ) %>%
+  group_by( Country.Region, ndays ) %>%
+  summarise( cases=sum(cases), population = min(`2015`)) %>%
+  ungroup() %>%
+  group_by( Country.Region) %>%
+  filter( Country.Region %in% c('Australia','Italy','Iran','US', 'China', 'Korea, South', 'Taiwan*', 'Japan')) %>%
+  arrange( ndays, .by_group=TRUE) %>%
+  mutate( cumcases = cumsum(cases), rate = cumsum(cases ) / population  ) %>%
+  ggplot(aes( ndays, rate, color=Country.Region)) +
+  geom_line() +
+  scale_y_log10() +
+  scale_x_continuous()
 
 
 ```
