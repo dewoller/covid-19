@@ -292,3 +292,15 @@ coronavirus %>%
 
 
 ```
+
+```{r risk}
+
+coronavirus %>% 
+filter( Country.Region %in% c('Australia')) %>%
+filter(Province.State=='Victoria') %>%
+filter( type=='confirmed') %>%
+summarise(sum(cases))
+
+
+```
+
