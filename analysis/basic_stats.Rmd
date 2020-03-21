@@ -19,7 +19,11 @@ knitr::opts_chunk$set(echo = TRUE, warning=FALSE)
 devtools::install_github("RamiKrispin/coronavirus")
 #install.packages('wpp2017')
 
+true_cases = function( deaths, fatality_rate = .0087, days_to_death=17.3, doubling_time=6.18) {
 
+  (deaths / fatality_rate)  * (2^(days_to_death/doubling_time))
+
+}
 
 ```
 
@@ -196,6 +200,34 @@ coronavirus %>%
 ```
 
 
+# Total cumulative deaths as a population rate
+ - greater than 200 cases, or Singapore or Australia
+
+Note, Japan had -1 cases on day 2
+
+```{r}
+
+coronavirus %>% 
+  inner_join(pop, by='name' ) %>% 
+  filter( type=='death' ) %>%
+  group_by( Country.Region ) %>%
+  mutate(ndays = date-min(date) ) %>%
+  group_by( Country.Region, ndays ) %>%
+  summarise( cases=sum(cases), population = min(`2015`)) %>%
+  ungroup() %>%
+  group_by( Country.Region) %>%
+  filter( Country.Region %in% top_10_countries) %>%
+  arrange( ndays, .by_group=TRUE) %>%
+  mutate( cumcases = cumsum(cases), rate = cumsum(cases ) / population  ) %>%
+  ggplot(aes( ndays, rate, color=Country.Region)) +
+  geom_line() +
+  scale_y_log10() +
+  scale_x_continuous()
+
+
+```
+
+
 
 # New cases population rate by week
 
@@ -301,6 +333,63 @@ filter(Province.State=='Victoria') %>%
 filter( type=='confirmed') %>%
 summarise(sum(cases))
 
+```
+
+# world wide true cases overall
+
+```{r world_wide_true_cases}
+
+coronavirus %>% 
+  filter( Country.Region %in% top_10_countries) %>%
+  filter( type!='recovered' ) %>%
+  group_by( date, type ) %>%
+  summarise( cases=sum(cases)) %>%
+  ungroup() %>%
+  group_by( type ) %>%
+  arrange( date, .by_group=TRUE) %>%
+  mutate( cumcases = cumsum(cases) ) %>%
+  pivot_wider( id_cols=date, names_from=type, values_from=cumcases) %>%
+  mutate( true_cases = true_cases( death )) %>%
+  pivot_longer( cols=-date, names_to='type', values_to='cases') %>%
+  mutate( ndays = date-min(date)) %>%
+  ggplot(aes( ndays, cases, color=type)) +
+  geom_line() +
+  scale_y_log10() +
+  scale_x_continuous()
 
 ```
+
+# world wide true cases by country
+
+What is the disparity between the number of predicted cases (per number of deaths) and reported cases
+
+
+```{r world_wide_true_cases_by_country}
+
+coronavirus %>% 
+  filter( Country.Region %in% top_10_countries) %>%
+  filter( type!='recovered' ) %>%
+  group_by( Country.Region) %>%
+  mutate( ndays = date-min(date)) %>%
+  group_by( Country.Region, ndays, type ) %>%
+  summarise( cases=sum(cases)) %>%
+  group_by( Country.Region, type ) %>%
+  arrange( ndays, .by_group=TRUE) %>%
+  mutate( cumcases = cumsum(cases) ) %>%
+  select(-cases) %>%
+  pivot_wider( names_from=type, values_from=cumcases) %>%
+  filter(death>0) %>%
+  mutate( true_cases = true_cases( death )) %>%
+  mutate( disparity = confirmed / true_cases ) %>%
+#  pivot_longer( cols=c(-ndays, -Country.Region), names_to='type', values_to='cases') %>%
+  ggplot(aes( ndays, disparity, color=Country.Region)) +
+  geom_smooth() +
+  scale_y_log10() +
+  scale_x_continuous()
+
+
+
+```
+
+
 
